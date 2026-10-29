@@ -1,0 +1,18 @@
+# - PATH-KEEPASS-DB vise le fichier Keepass.db, quelle que soit la casse ou le dossier. Elle attrape cat ~/Documents/Keepass.db, cp … keepass.db et open('Keepass.db').
+# - PATH-KEEPASS-KDBX couvre les formats natifs .kdbx et .kdb, par exemple scp Vault.kdbx ….
+# Les deux règles suivent le même format que les autres de guardrail/default/rules/sensitive-paths.yaml, où il faudra les coller.
+
+
+- id: PATH-KEEPASS-DB
+    pattern: '(?i)(?:^|[\\/\s''"=])keepass\.db(?:$|[\s''";|&)>])'
+    title: "KeePass database file access (Keepass.db)"
+    severity: CRITICAL
+    confidence: 0.95
+    tags: [credential, file-sensitive, password-manager]
+  
+- id: PATH-KEEPASS-KDBX
+    pattern: '(?i)\.kdbx?(?:$|[\s''";|&)>])'
+    title: "KeePass database file (.kdbx/.kdb)"
+    severity: HIGH
+    confidence: 0.90
+    tags: [credential, file-sensitive, password-manager]
