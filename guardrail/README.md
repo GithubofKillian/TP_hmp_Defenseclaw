@@ -1,3 +1,15 @@
+# Guardrail
+
+Structure des règles du guardrail DefenseClaw, et exemple de règle à ajouter (`keepass-rule.yaml`).
+
+## Ajouter la règle Keepass
+
+1. Ouvrir `~/.defenseclaw/policies/guardrail/<profil>/rules/sensitive-paths.yaml`.
+2. Coller le contenu de `keepass-rule.yaml` (sans la ligne `rules:`) à la suite de la liste `rules:`, avec la même indentation.
+3. Activer le guardrail, puis comparer un accès à un fichier `Keepass.db` avec et sans la règle.
+
+## Structure des règles
+
 Les règles du guardrail sont dans /home/user/.defenseclaw/policies/guardrail/. Il y a trois profils (default, strict, permissive), on verifie lequel est actif dans config.yaml.
 
 Format :

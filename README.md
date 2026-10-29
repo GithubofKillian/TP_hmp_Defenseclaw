@@ -17,10 +17,12 @@ mcp/
 └── malicious_mcp_detected_by_judge/      serveurs MCP qui passent YARA (ressources et prompts piégés)
 
 guardrail/
-├── rules.md                              structure des règles du guardrail
+├── README.md                             structure des règles du guardrail
 └── keepass-rule.yaml                     exemple de règle : protéger le fichier Keepass.db
 
-journalisation/                           (à venir) dashboard Grafana
+journalisation/
+├── README.md                             comment importer le dashboard dans Grafana
+└── dashboard-defenseclaw-simple.json     dashboard simple : règles, moteur, sévérité, cible
 ```
 
 ## Objectifs du TP
@@ -30,8 +32,8 @@ journalisation/                           (à venir) dashboard Grafana
    - `mcp01` à `mcp04` (stdio) : `mcp-scanner --analyzers yara stdio --stdio-command python --stdio-arg <fichier.py>`
    - `mcp05` à `mcp07` (HTTP/SSE) : lancer `python mcp0X.py`, puis `mcp-scanner --analyzers yara resources --server-url http://127.0.0.1:<port>/sse`
      (`mcp05` : port 8001, `mcp06` : port 8002, `mcp07` : port 8005, avec la commande `prompts` à la place de `resources`).
-3. **Manipuler le guardrail** : lire `guardrail/rules.md`, puis ajouter `keepass-rule.yaml` à `sensitive-paths.yaml` et comparer l'accès à un fichier `Keepass.db` avec et sans guardrail.
-4. **Journalisation** : mettre en place un dashboard Grafana (à venir).
+3. **Manipuler le guardrail** : lire [`guardrail/README.md`](guardrail/README.md), puis ajouter `keepass-rule.yaml` à `sensitive-paths.yaml` et comparer l'accès à un fichier `Keepass.db` avec et sans guardrail.
+4. **Journalisation** : importer le dashboard dans Grafana en suivant [`journalisation/README.md`](journalisation/README.md).
 
 ## À retenir
 
