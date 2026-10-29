@@ -1,6 +1,4 @@
-import sys, os
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-from campagne_scanner.corpus.mcp.dynamic_scenarios.server_base import run
+from server_base import run
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("mcp06-resource-injection")
