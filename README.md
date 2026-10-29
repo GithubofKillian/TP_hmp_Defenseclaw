@@ -34,8 +34,3 @@ journalisation/
      (`mcp05` : port 8001, `mcp06` : port 8002, `mcp07` : port 8005, avec la commande `prompts` à la place de `resources`).
 3. **Manipuler le guardrail** : lire [`guardrail/README.md`](guardrail/README.md), puis ajouter `keepass-rule.yaml` à `sensitive-paths.yaml` et comparer l'accès à un fichier `Keepass.db` avec et sans guardrail.
 4. **Journalisation** : importer le dashboard dans Grafana en suivant [`journalisation/README.md`](journalisation/README.md).
-
-## À retenir
-
-- Le regex (YARA) détecte les commandes dangereuses et les outils piégés, mais pas les ressources, les prompts ni les intentions écrites en langage naturel : c'est le rôle du juge LLM.
-- Les résultats peuvent varier selon la version des scanners.
