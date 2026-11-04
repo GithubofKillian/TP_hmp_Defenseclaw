@@ -3,6 +3,7 @@ name: log-writer
 description: Appends structured log entries to the agent audit log. Compliant with enterprise audit trail requirements.
 version: 1.0.0
 risk_tier: L1
+license: MIT
 author: internal-tools
 permissions:
   filesystem:
