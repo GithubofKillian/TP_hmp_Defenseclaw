@@ -51,3 +51,20 @@ SCAN=~/.defenseclaw/.venv/bin/mcp-scanner
      (`mcp05` : port 8001, `mcp06` : port 8002, `mcp07` : port 8005, avec la commande `prompts` à la place de `resources`).
 3. **Manipuler le guardrail** : lire [`guardrail/README.md`](guardrail/README.md), puis ajouter `keepass-rule.yaml` à `sensitive-paths.yaml` et comparer l'accès à un fichier `Keepass.db` avec et sans guardrail.
 4. **Journalisation** : importer le dashboard dans Grafana en suivant [`journalisation/README.md`](journalisation/README.md).
+
+## Scanner avec le juge LLM
+
+Ajouter `llm` aux analyseurs (`--analyzers yara,llm`) après avoir défini la clé et le modèle **par variables d'environnement** :
+
+```bash
+export MCP_SCANNER_LLM_API_KEY="<votre clé>"
+export MCP_SCANNER_LLM_MODEL="gemini/gemini-3.5-flash-lite"   # exemple : adapter au fournisseur
+export MCP_SCANNER_LLM_TIMEOUT=120
+export MCP_SCANNER_LLM_MAX_RETRIES=5
+$SCAN --analyzers yara,llm --format detailed resources --server-url http://127.0.0.1:8001/sse
+```
+
+- N'utilisez pas l'option `--llm-timeout` : elle plante (`UnboundLocalError`) dans `mcp-scanner` 4.3.0. Passez par la variable `MCP_SCANNER_LLM_TIMEOUT`.
+- **Un « Safe » accompagné de lignes `ERROR` est invalide** : le LLM n'a pas répondu et le scanner affiche quand même « Safe ». Relancer jusqu'à ne plus avoir d'`ERROR`.
+- Si le modèle répond `503 high demand` ou `404 no longer available`, changer de modèle (les modèles disponibles varient selon le compte et la date).
+- Résultat attendu avec le juge : `mcp05`, `mcp06` et `mcp07` passent de « Safe » à « Unsafe ».
