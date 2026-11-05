@@ -30,18 +30,24 @@ journalisation/
 Les serveurs de `mcp/` ont besoin de la bibliothèque Python `mcp` (versions 1.x et 2.x supportées) :
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate   # Debian/Ubuntu : apt install python3-venv
-pip install mcp
+uv venv .venv && source .venv/bin/activate
+uv pip install mcp
 ```
 
-Les commandes `python` ci-dessous doivent être lancées avec ce venv activé.
+Les commandes `python` ci-dessous doivent être lancées avec ce venv activé. Le scanner, lui, vit dans le venv de DefenseClaw : on y accède avec
+
+```bash
+SCAN=~/.defenseclaw/.venv/bin/mcp-scanner
+```
+
+> Sur Ubuntu récent, `pip install mcp` hors d'un venv est refusé (`externally-managed-environment`) : utiliser `uv` comme ci-dessus.
 
 ## Objectifs du TP
 
 1. **Scanner des skills** : `defenseclaw skill scan <dossier-du-skill>`, avec et sans juge LLM.
 2. **Scanner des MCP** :
-   - `mcp01` à `mcp04` (stdio, lancés par le scanner : ne pas les démarrer à la main) : `mcp-scanner --analyzers yara stdio --stdio-command python --stdio-arg <fichier.py>`
-   - `mcp05` à `mcp07` (HTTP/SSE) : lancer `python mcp0X.py`, puis `mcp-scanner --analyzers yara resources --server-url http://127.0.0.1:<port>/sse`
+   - `mcp01` à `mcp04` (stdio, lancés par le scanner : ne pas les démarrer à la main) : `$SCAN --analyzers yara stdio --stdio-command "$(which python)" --stdio-arg=<fichier.py>`
+   - `mcp05` à `mcp07` (HTTP/SSE) : lancer `python mcp0X.py`, puis `$SCAN --analyzers yara resources --server-url http://127.0.0.1:<port>/sse`
      (`mcp05` : port 8001, `mcp06` : port 8002, `mcp07` : port 8005, avec la commande `prompts` à la place de `resources`).
 3. **Manipuler le guardrail** : lire [`guardrail/README.md`](guardrail/README.md), puis ajouter `keepass-rule.yaml` à `sensitive-paths.yaml` et comparer l'accès à un fichier `Keepass.db` avec et sans guardrail.
 4. **Journalisation** : importer le dashboard dans Grafana en suivant [`journalisation/README.md`](journalisation/README.md).
