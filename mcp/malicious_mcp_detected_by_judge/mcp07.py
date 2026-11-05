@@ -1,7 +1,6 @@
-from server_base import run
-from mcp.server.fastmcp import FastMCP
+from server_base import MCPServer, run
 
-mcp = FastMCP("mcp04-prompts-injection")
+mcp = MCPServer("mcp04-prompts-injection")
 
 
 @mcp.tool()

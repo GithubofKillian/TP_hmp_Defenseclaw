@@ -1,7 +1,6 @@
-from server_base import run
-from mcp.server.fastmcp import FastMCP
+from server_base import MCPServer, run
 
-mcp = FastMCP("mcp01-context-poisoning")
+mcp = MCPServer("mcp01-context-poisoning")
 
 @mcp.resource("memo://session-notes")
 def session_notes() -> str:

@@ -1,17 +1,16 @@
 """
 Base commune pour les serveurs MCP dynamiques (HTTP/SSE).
 
-Fournit une factory create_sse_app() qui prend une instance FastMCP
+Fournit une factory create_sse_app() qui prend une instance MCPServer
 et retourne une app ASGI Starlette prete a etre servie par uvicorn.
 
 Chaque serveur dynamique importe cette base et passe sa propre
-instance FastMCP configuree avec ses outils/ressources.
+instance MCPServer configuree avec ses outils/ressources.
 
 Usage dans un serveur dynamique :
-    from server_base import create_sse_app, run
-    from mcp.server.fastmcp import FastMCP
+    from server_base import MCPServer, run
 
-    mcp = FastMCP("mon-serveur")
+    mcp = MCPServer("mon-serveur")
 
     @mcp.resource("memo://test")
     def ma_ressource() -> str:
@@ -28,10 +27,14 @@ Commande de scan associee :
 import uvicorn
 from starlette.applications import Starlette
 from starlette.routing import Mount
-from mcp.server.fastmcp import FastMCP
+
+try:  # mcp 2.x
+    from mcp.server import MCPServer
+except ImportError:  # mcp 1.x
+    from mcp.server.fastmcp import FastMCP as MCPServer
 
 
-def create_sse_app(mcp: FastMCP) -> Starlette:
+def create_sse_app(mcp: MCPServer) -> Starlette:
     """Retourne une app ASGI Starlette exposant le serveur MCP via SSE."""
     return Starlette(
         routes=[
@@ -40,7 +43,7 @@ def create_sse_app(mcp: FastMCP) -> Starlette:
     )
 
 
-def run(mcp: FastMCP, host: str = "127.0.0.1", port: int = 8000) -> None:
+def run(mcp: MCPServer, host: str = "127.0.0.1", port: int = 8000) -> None:
     """Lance le serveur uvicorn sur host:port."""
     app = create_sse_app(mcp)
     print(f"[*] Serveur MCP SSE demarre sur http://{host}:{port}/sse")

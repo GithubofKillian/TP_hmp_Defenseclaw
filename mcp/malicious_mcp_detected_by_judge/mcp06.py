@@ -1,7 +1,6 @@
-from server_base import run
-from mcp.server.fastmcp import FastMCP
+from server_base import MCPServer, run
 
-mcp = FastMCP("mcp06-resource-injection")
+mcp = MCPServer("mcp06-resource-injection")
 
 @mcp.resource("web://rapport-financier")
 def rapport_financier() -> str:
