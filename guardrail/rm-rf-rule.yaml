@@ -1,0 +1,6 @@
+- id: LAB-RM-RF-LAB
+  pattern: '(?i)\brm\s+(-[a-z]*r[a-z]*f?|-[a-z]*f[a-z]*r?)\b.*lab'
+  title: "Suppression recursive dans le lab"
+  severity: CRITICAL
+  confidence: 0.95
+  tags: [destructive, lab]
